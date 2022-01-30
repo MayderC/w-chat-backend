@@ -4,4 +4,5 @@ module.exports = {
   DB_STRING_CONECTION : process.env.DEV_DB_STRING_CNN,
   PORT : process.env.DEV_PORT,
   NODE_ENV : process.env.NODE_ENV
+  
 }
