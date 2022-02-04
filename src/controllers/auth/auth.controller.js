@@ -1,29 +1,28 @@
-const {createToken, decodeToken} = require('../../helpers/jsonwebtoken')
+const { AuthService } = require("../../services/auth/auth.service");
+const auth = new AuthService();
 
-
-
-const userRegister = (req, res) =>{
-
-  const {username, email, password} = req.body
-  
-  // servicio.login, si los datos son correctos retornar token, sino error
-
-
-  if(result){
-    return res.se
+const userRegister = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    //retorna un token si se registro correctamente, false si no
+    const data = await auth.register(username, password);
+    return data ? res.send({ data }) : res.send({ msg: "Error" });
+  } catch (error) {
+    return res.send({ msg: "Error" });
   }
+};
 
-}
+const userLogin = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const data = await auth.login(username, password);
+    return data ? res.send({ data }) : res.send({ msg: "Error" });
+  } catch (error) {
+    return res.send({ msg: "Error" });
+  }
+};
 
-
-const userLogin = async(req, res) =>{
-  const token = await createToken({name : "mayder"})
-  const payload = decodeToken(token)
-
-  console.log(payload)
-
-  res.send({token : token, payload : payload});
-}
-
-
-
+module.exports = {
+  userLogin,
+  userRegister,
+};

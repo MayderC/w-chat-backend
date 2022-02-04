@@ -1,45 +1,39 @@
-const express = require('express');
-const cors = require('cors');
-const auth = require('../routes/auth.routes');
-const {sequelize, initVarsEnv} = require('../database');
+const express = require("express");
+const cors = require("cors");
+const auth = require("../routes/auth.routes");
+const { sequelize, initVarsEnv } = require("../database");
 
 class Server {
-
-  constructor(ENV){
+  constructor(ENV) {
     this.app = express();
-    this.PORT = ENV.PORT
-    this.PATH = '/api'
+    this.PORT = ENV.PORT;
+    this.PATH = "/api";
 
-    this.middlewares()
-    this.routes()
-    this.conexion()
+    this.middlewares();
+    this.routes();
+    this.conexion();
   }
 
-
-  conexion(){
-
- 
-
-
+  async conexion() {
+    await sequelize.authenticate();
+    await sequelize.sync({ force: true });
+    console.log("Postgres ON");
   }
 
-
-  middlewares(){
-    this.app.use(express.json())
+  middlewares() {
+    this.app.use(express.json());
     this.app.use(cors());
   }
 
-  routes(){
-    this.app.use('/api', auth)
+  routes() {
+    this.app.use("/api", auth);
   }
 
-  start(){
-    return new Promise((resolve, reject) =>{
-      this.app.listen(this.PORT, ()=> resolve())
-    })
+  start() {
+    return new Promise((resolve, reject) => {
+      this.app.listen(this.PORT, () => resolve());
+    });
   }
-
 }
 
-
-module.exports = {Server}
+module.exports = { Server };

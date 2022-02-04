@@ -1,13 +1,11 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
+const {
+  userRegister,
+  userLogin,
+} = require("../controllers/auth/auth.controller");
 
+router.post("/auth/register", userRegister);
+router.post("/auth/login", userLogin);
 
-
-router.get('/auth', (req, res) => {console.log("Nada")})
-
-
-
-
-
-module.exports = router
-
+module.exports = router;
