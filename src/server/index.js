@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const auth = require("../routes/auth.routes");
-const { sequelize, initVarsEnv } = require("../database");
+const { sequelize } = require("../database");
 
 class Server {
   constructor(ENV) {
@@ -26,7 +26,7 @@ class Server {
   }
 
   routes() {
-    this.app.use("/api", auth);
+    this.app.use("/api/auth", auth);
   }
 
   start() {

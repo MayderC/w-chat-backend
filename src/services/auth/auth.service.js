@@ -1,5 +1,5 @@
 const { User } = require("../../models/user.model");
-const { createToken } = require("../..//helpers/jsonwebtoken");
+const { createToken, decodeToken } = require("../..//helpers/jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 class AuthService {
@@ -14,12 +14,23 @@ class AuthService {
         username: username,
         password: passHashed,
       });
-      const token = await createToken({ id: userSaved.id });
+      const token = await createToken({ id_user: userSaved.id_user });
       const user = { username: userSaved.username, id_user: userSaved.id_user };
       return { token, user };
     } catch (error) {
       return false;
     }
+  }
+
+  async getProfile(token) {
+    const payload = decodeToken(token);
+    if (!payload) {
+      return false;
+    }
+
+    const user = await User.findByPk(payload.id_user);
+    const data = { username: user.username, id_user: user.id_user };
+    return data ? data : false;
   }
 
   async login(username, password) {
@@ -29,7 +40,7 @@ class AuthService {
       },
     });
     if (!userFound) return false;
-    const token = await createToken({ id: userFound.id_user });
+    const token = await createToken({ id_user: userFound.id_user });
     const match = bcrypt.compareSync(password, userFound.password);
     const user = { username: userFound.username, id_user: userFound.id_user };
     return match ? { token, user } : false;

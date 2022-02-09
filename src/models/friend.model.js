@@ -2,38 +2,23 @@ const { sequelize } = require("../database");
 const { DataTypes } = require("sequelize");
 const { User } = require("./user.model");
 
-const Message = sequelize.define("message", {
-  id: {
+const Friend = sequelize.define("friend", {
+  friend_a: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true,
-  },
-
-  user_received: {
-    type: DataTypes.INTEGER,
-    foreignKey: true,
     references: {
       model: User,
       key: "id_user",
     },
   },
-
-  user_trasmitter: {
+  friend_b: {
     type: DataTypes.INTEGER,
-    foreignKey: true,
+    primaryKey: true,
     references: {
       model: User,
       key: "id_user",
     },
-  },
-
-  messages: {
-    type: DataTypes.TEXT,
-  },
-
-  date: {
-    type: DataTypes.DATE,
   },
 });
 
-module.exports = { Message };
+module.exports = { Friend };
