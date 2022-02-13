@@ -14,4 +14,4 @@ router.post("/message/:id", function (req, res) {
 
 //obetner mis mensasajes, usuarios que me enviarion un mensaje, vista asidebar
 
-MODULE.exports = router;
+module.exports = router;

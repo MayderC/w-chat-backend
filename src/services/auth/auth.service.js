@@ -24,13 +24,10 @@ class AuthService {
 
   async getProfile(token) {
     const payload = decodeToken(token);
-    if (!payload) {
-      return false;
-    }
+    if (!payload) return false;
 
     const user = await User.findByPk(payload.id_user);
-    const data = { username: user.username, id_user: user.id_user };
-    return data ? data : false;
+    return user ? { username: user.username, id_user: user.id_user } : false;
   }
 
   async login(username, password) {
