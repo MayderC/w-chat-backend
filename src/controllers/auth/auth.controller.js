@@ -3,9 +3,6 @@ const auth = new AuthService();
 
 const userVerify = async (req, res) => {
   const token = req.headers["token"];
-
-  console.log(req.query);
-
   try {
     const data = await auth.getProfile(token);
     return data ? res.send(data) : res.send({ msg: "Error" });
@@ -17,7 +14,6 @@ const userVerify = async (req, res) => {
 const userRegister = async (req, res) => {
   const { username, password } = req.body;
   try {
-    //retorna un token si se registro correctamente, false si no
     const data = await auth.register(username, password);
     return data ? res.send({ data }) : res.send({ msg: "Error" });
   } catch (error) {

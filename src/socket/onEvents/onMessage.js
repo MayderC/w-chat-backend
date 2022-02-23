@@ -1,11 +1,25 @@
+const { GlobalMessage } = require("../../services/global-msg/messages");
+const { GLOBAL_ROOM } = require("../Rooms/names");
+const global_message = new GlobalMessage();
+
 const onMessage = (socket) => {
-  socket.on("send-message", async (message) => {
-    console.log(socket.userInfo, message);
-    //guardar en DB. llamar a servicio que guarda msg
-    //const messageInfo = await Message.create({})
-    // notificar a usuario destino. si el mensaje se guardo
-    // solo a los 2 suaurios, data.id_user and friend
-    socket.emit("message-to", message);
+  socket.on("send-message", async (payload, callback) => {
+    const { id, msg, date } = await global_message.insertMessage(
+      socket.userInfo,
+      payload.msg
+    );
+
+    const response = {
+      id_message: id,
+      message: msg,
+      date,
+      id_user: socket.userInfo.data.id,
+      username: socket.userInfo.data.username,
+    };
+
+    callback(response);
+
+    socket.to(GLOBAL_ROOM).emit("message", JSON.stringify(response));
   });
 };
 
