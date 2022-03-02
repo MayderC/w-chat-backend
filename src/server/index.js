@@ -29,7 +29,7 @@ class Server {
   }
   async conexion() {
     await sequelize.authenticate();
-    //await sequelize.sync({ force: true });
+    await sequelize.sync({ force: true });
     console.log("Postgres ON");
   }
   middlewares() {
