@@ -8,15 +8,16 @@ class GlobalMessage {
 
   async insertMessage(user, msg) {
     try {
-      const saved_msg = await GlobalMsg.create({
+      return await GlobalMsg.create({
         msg,
         uid: user.data.id,
       });
-      return saved_msg;
     } catch (error) {
       return false;
     }
   }
+
+  async getMessagesBetween(first, last) {}
 
   async geMessages() {
     return await sequelize.query(

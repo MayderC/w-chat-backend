@@ -4,18 +4,13 @@ const ENV = require("../config/environments/");
 const KEYWORD = ENV.JWT_KEYWORD;
 
 const createToken = (payload = {}) => {
-  // 1000 milliseconds = 1 second
   const SECOND = 1000;
-
-  // 60 seconds = 1 minute
   const MINUTE = 60;
-
-  // 60 minutes = 1 hour
   const HOUR = 60;
 
-  // quantity of hours
   const HOURS = 7;
 
+  // HOURS const, in ms
   payload.exp = Math.floor(Date.now() / SECOND) + MINUTE * HOUR * HOURS;
 
   return new Promise((resolve, reject) => {

@@ -6,7 +6,7 @@ class AuthService {
   constructor() {}
 
   async register(username, password) {
-    if (!username || !username) return false;
+    if (!username || !password) return false;
 
     try {
       const passHashed = this.encryptPassword(password);
@@ -20,6 +20,13 @@ class AuthService {
     } catch (error) {
       return false;
     }
+  }
+
+  encryptPassword(password) {
+    const saltRounds = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync(password, salt);
+    return hash;
   }
 
   async getProfile(token) {
@@ -41,13 +48,6 @@ class AuthService {
     const match = bcrypt.compareSync(password, userFound.password);
     const user = { username: userFound.username, id: userFound.id };
     return match ? { token, user } : false;
-  }
-
-  encryptPassword(password) {
-    const saltRounds = 10;
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const hash = bcrypt.hashSync(password, salt);
-    return hash;
   }
 
   updatePassword() {}
