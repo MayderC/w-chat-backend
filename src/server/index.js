@@ -16,7 +16,7 @@ class Server {
     this.server = http.createServer(this.app);
     this.io = new serverSocket(this.server, {
       cors: {
-        origin: "http://localhost:3000",
+        origin: process.env.CLIENT_URL,
       },
     });
     this.PORT = ENV.PORT;
