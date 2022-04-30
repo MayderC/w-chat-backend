@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const auth = require("../routes/auth.routes");
 const user = require("../routes/user.routes");
-const { sequelize } = require("../database");
-const { socketController } = require("../socket/controller");
+const { sequelize } = require("../../database");
+const { socketController } = require("../../socket/controller");
 const { socketAuthorization } = require("../middlewares/socketAuthorization");
 // socket
 

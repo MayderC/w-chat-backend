@@ -1,4 +1,4 @@
-const { AuthService } = require("../services/auth/auth.service");
+const { AuthService } = require("../../aplication-bussines-rules/services/auth/auth.service");
 const auth = new AuthService();
 
 const socketAuthorization = async (socket, next) => {
