@@ -1,4 +1,4 @@
-const { sequelize } = require("../../database");
+const { sequelize } = require("../../frameworks-drivers/database");
 const { DataTypes } = require("sequelize");
 const { User } = require("./user.model");
 
