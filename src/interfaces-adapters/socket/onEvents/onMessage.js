@@ -1,4 +1,4 @@
-const { GlobalMessage } = require("../../services/global-msg/messages");
+const { GlobalMessage } = require("../../../aplication-bussines-rules/services/global-msg/messages");
 const { GLOBAL_ROOM } = require("../Rooms/names");
 const global_message = new GlobalMessage();
 

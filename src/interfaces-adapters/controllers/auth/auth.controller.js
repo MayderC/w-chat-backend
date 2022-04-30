@@ -1,5 +1,5 @@
 const { AuthService } = require("../../../aplication-bussines-rules/services/auth/auth.service");
-const {decodeToken, createToken} = require("../../../helpers/jsonwebtoken")
+const {decodeToken, createToken} = require("../../helpers/jsonwebtoken")
 const auth = new AuthService();
 
 const userVerify = async (req, res) => {

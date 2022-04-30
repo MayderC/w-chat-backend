@@ -1,5 +1,5 @@
 const ENVIRONMENT = require("./src/config/environments");
-const { Server } = require("./src/server");
+const { Server } = require("./src/aplication-bussines-rules/server");
 
 const main = async () => {
   const app = new Server(ENVIRONMENT);

@@ -1,7 +1,7 @@
-const { GlobalMsg } = require("../../models/global-msg.model");
-const { User } = require("../../models/user.model");
+const { GlobalMsg } = require("../../../enterprise-bussines-rules/models/global-msg.model");
+const { User } = require("../../../enterprise-bussines-rules/models/user.model");
 const { QueryTypes } = require("sequelize");
-const { sequelize } = require("../../database");
+const { sequelize } = require("../../../database");
 
 class GlobalMessage {
   constructor() {}

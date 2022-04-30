@@ -1,5 +1,5 @@
 const { User } = require("../../../enterprise-bussines-rules/models/user.model");
-const { createToken } = require("../../../helpers/jsonwebtoken");
+const { createToken } = require("../../../interfaces-adapters/helpers/jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 class AuthService {

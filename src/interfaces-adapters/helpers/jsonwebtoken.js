@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const ENV = require("../config/environments/");
+const ENV = require("../../config/environments");
 
 const KEYWORD = ENV.JWT_KEYWORD;
 
