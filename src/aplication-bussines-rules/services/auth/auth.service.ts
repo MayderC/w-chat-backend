@@ -1,16 +1,20 @@
 const { User } = require("../../../enterprise-bussines-rules/models/user.model");
+import EncryptPassword from '../../helpers/encryptPassword';
 const { createToken } = require("../../../interfaces-adapters/helpers/jsonwebtoken");
-const bcrypt = require("bcrypt");
 
-class AuthService {
-  constructor(encryptPassword, unitOfWork) {
-    this._encryptPassword = encryptPassword;
-    this._unitOfWork = unitOfWork;
+
+
+export default class AuthService {
+
+  _unitOfWork;
+
+  constructor() {
+    this._unitOfWork = "";
   }
 
-  async register(username, password) {
+  async register(username: any, password: any) {
     if (!username || !password) return {};
-    const passHashed = this.encryptPassword(password);
+    const passHashed = EncryptPassword.encryptPassword(password);
     try {
       const userSaved = await User.create({username: username,password: passHashed,});
       //const saved =  unitOfWork.auth.register({username: password: passHashed})
@@ -21,13 +25,13 @@ class AuthService {
     }
   }
 
-  async getProfile(id) {
+  async getProfile(id: any) {
 
     const user = await User.findByPk(id);
     return user ? { username: user.username, id: user.id } : false;
   }
 
-  async login(username, password) {
+  async login(username :any, password : any) {
     const userFound = await User.findOne({
       where: {
         username: username,
@@ -35,7 +39,7 @@ class AuthService {
     });
     if (!userFound) return false;
     const token = await createToken({ id: userFound.id });
-    const match = bcrypt.compareSync(password, userFound.password);
+    const match = EncryptPassword.verifyPassword(password, userFound.password);
     const user = { username: userFound.username, id: userFound.id };
     return match ? { token, user } : false;
   }
@@ -45,4 +49,4 @@ class AuthService {
   requestNewPassword() {}
 }
 
-module.exports = { AuthService };
+

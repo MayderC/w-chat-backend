@@ -1,14 +1,14 @@
 const bcrypt = require("bcrypt");
 
-module.exports = class EncryptPassword {
-  encryptPassword(password) {
+export default class EncryptPassword {
+  static encryptPassword(password : any) {
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
     return hash;
   }
 
-  verifyPassword(passwordRequest, userPassword) {
+  static verifyPassword(passwordRequest : any, userPassword : any) {
     return bcrypt.compareSync(passwordRequest, userPassword);
   }
 };

@@ -1,17 +1,30 @@
 const express = require("express");
+import IServer from './IServer';
+import IEnvronment from '../../config/environments/IEnvironment';
 const cors = require("cors");
 const auth = require("../../interfaces-adapters/routes/auth.routes");
 const user = require("../../interfaces-adapters/routes/user.routes");
 const { sequelize } = require("../../frameworks-drivers/database");
 const { socketController } = require("../../interfaces-adapters/socket/controller");
 const { socketAuthorization } = require("../../interfaces-adapters/middlewares/socketAuthorization");
+
+import AuthController from '../../interfaces-adapters/controllers/auth/auth.controller';
+import AuthService from '../services/auth/auth.service'
 // socket
 
 const http = require("http");
 const { Server: serverSocket } = require("socket.io");
 
-class Server {
-  constructor(ENV) {
+class Server implements IServer {
+
+  private app;
+  private server;
+  private io;
+  private PORT;
+  private PATH;
+  _env : string;
+  constructor(ENV: IEnvronment) {
+    this._env = "test"
     this.app = express();
     this.server = http.createServer(this.app);
     this.io = new serverSocket(this.server, {
@@ -43,7 +56,11 @@ class Server {
     this.io.use(socketAuthorization);
   }
   routes() {
-    this.app.use("/api/auth", auth);
+    const authService = new AuthService();
+    const authController = new AuthController(authService);
+    this.app.use("/api/auth", auth(authController));
+
+
     this.app.use("/api/user", user);
   }
   socket() {
@@ -51,7 +68,7 @@ class Server {
     console.log("SOCKET ON");
   }
   start() {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.server.listen(this.PORT, () => {
         console.log("SERVER ON");
         resolve();
