@@ -1,7 +1,7 @@
 const { Sequelize } = require("sequelize");
 const ENV = require("../../config/environments");
 
-const sequelize = new Sequelize(ENV.DB_STRING_CONECTION, {
+export default  new Sequelize(ENV.DB_STRING_CONECTION, {
   dialectOptions: {
     ssl: {
       require: true,
@@ -9,4 +9,4 @@ const sequelize = new Sequelize(ENV.DB_STRING_CONECTION, {
     },
   },
 });
-module.exports = { sequelize };
+

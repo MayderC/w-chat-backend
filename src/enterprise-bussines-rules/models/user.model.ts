@@ -1,4 +1,4 @@
-const { sequelize } = require("../../frameworks-drivers/database");
+import  sequelize  from '../../frameworks-drivers/database/index'
 const { DataTypes } = require("sequelize");
 
 const User = sequelize.define("user", {
