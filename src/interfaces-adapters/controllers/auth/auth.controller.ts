@@ -2,6 +2,9 @@ import AuthService from "../../../aplication-bussines-rules/services/auth/auth.s
 const {decodeToken, createToken} = require("../../helpers/jsonwebtoken")
 import Express from "express";
 
+
+
+
 export default class AuthController {
 
   _authService;
@@ -12,7 +15,7 @@ export default class AuthController {
 
    userVerify = async (req : Express.Request, res : Express.Response) => {
 
-    const payload = decodeToken(req.headers["token"] = "");
+    const payload = decodeToken(req.headers["token"] || "");
     if (!payload) return res.status(401).send({msg : "Error"});
   
   

@@ -1,7 +1,7 @@
 const { AuthService } = require("../../aplication-bussines-rules/services/auth/auth.service");
 const auth = new AuthService();
 
-const socketAuthorization = async (socket, next) => {
+const socketAuthorization = async (socket : any, next : any) => {
   const token = socket.handshake.auth.token;
   const data = await auth.getProfile(token);
   if (data) {

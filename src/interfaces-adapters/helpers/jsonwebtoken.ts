@@ -3,7 +3,13 @@ const ENV = require("../../config/environments");
 
 const KEYWORD = ENV.JWT_KEYWORD;
 
-const createToken = (payload = {}) => {
+interface IJwtPayload {
+  id: string;
+  exp :any
+}
+
+
+const createToken = (payload : IJwtPayload) => {
   const SECOND = 1000;
   const MINUTE = 60;
   const HOUR = 60;
@@ -13,8 +19,8 @@ const createToken = (payload = {}) => {
   // HOURS const, in ms
   payload.exp = Math.floor(Date.now() / SECOND) + MINUTE * HOUR * HOURS;
 
-  return new Promise((resolve, reject) => {
-    jwt.sign(payload, KEYWORD, (err, token) => {
+  return new Promise<string>((resolve, reject) => {
+    jwt.sign(payload, KEYWORD, (err : any, token : string) => {
       if (err) {
         reject(err);
       }
@@ -25,7 +31,7 @@ const createToken = (payload = {}) => {
   });
 };
 
-const decodeToken = (token) => {
+const decodeToken = (token : string) : IJwtPayload | boolean => {
   try {
     const payload = jwt.verify(token, KEYWORD);
     return payload;

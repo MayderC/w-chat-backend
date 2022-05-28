@@ -1,9 +1,8 @@
 const { GlobalMsg } = require("../../../enterprise-bussines-rules/models/global-msg.model");
-const { User } = require("../../../enterprise-bussines-rules/models/user.model");
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../../../frameworks-drivers/database");
 
-class GlobalMessage {
+export default class GlobalMessageService {
   constructor() {}
 
   async insertMessage(user, msg) {
@@ -29,4 +28,4 @@ class GlobalMessage {
   }
 }
 
-module.exports = { GlobalMessage };
+

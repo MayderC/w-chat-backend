@@ -3,7 +3,7 @@ const { Socket } = require("socket.io");
 const { GlobalMessage } = require("../../../aplication-bussines-rules/services/global-msg/messages");
 const menssage = new GlobalMessage();
 
-const joinRoom = (socket = Socket) => {
+const joinRoom = (socket : typeof Socket) => {
   socket.on("join-global", async () => {
     socket.join(GLOBAL_ROOM);
     const data = await menssage.geMessages();
