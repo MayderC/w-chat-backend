@@ -56,13 +56,29 @@ class Server implements IServer {
     this.io.use(socketAuthorization);
   }
   routes() {
-    const authService = new AuthService();
-    const authController = new AuthController(authService);
-    this.app.use("/api/auth", auth(authController));
+
+    this.authRoutes()
 
 
     this.app.use("/api/user", user);
   }
+
+
+  //routes
+  authRoutes(){
+    const authService = new AuthService();
+    const authController = new AuthController(authService);
+
+    this.app.use("/api/auth", auth(authController));
+  }
+
+  userRoutes(){
+    // service instance
+    // constroller instance(service)
+    // use user route(constroller)
+  }
+
+  //socket controllers
   socket() {
     this.io.on("connection", socketController);
     console.log("SOCKET ON");
