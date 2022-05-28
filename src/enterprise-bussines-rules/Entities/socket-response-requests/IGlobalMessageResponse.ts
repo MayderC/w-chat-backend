@@ -1,6 +1,6 @@
 
 
-export default interface IGlobalMessageRequest {
+export default interface IGlobalMessageResponse {
   id_message: string,
   message: string,
   date: string

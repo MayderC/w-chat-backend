@@ -1,15 +1,16 @@
-const { GlobalMessage } = require("../../../aplication-bussines-rules/services/global-msg/messages");
+import  GlobalMessage  from "../../../aplication-bussines-rules/services/global-msg/messages";
+import IGlobalMessageRequest from "../../../enterprise-bussines-rules/Entities/socket-response-requests/IGlobalMessageRequest";
 const { GLOBAL_ROOM } = require("../Rooms/names");
 const global_message = new GlobalMessage();
 
-const onMessage = (socket) => {
-  socket.on("send-message", async (payload, callback) => {
+const onMessage = (socket : any) => {
+  socket.on("send-message", async (payload : any, callback : Function) => {
     const { id, msg, date } = await global_message.insertMessage(
       socket.userInfo,
       payload.msg
     );
 
-    const response = {
+    const response : IGlobalMessageRequest = {
       id_message: id,
       message: msg,
       date,
@@ -18,7 +19,6 @@ const onMessage = (socket) => {
     };
 
     callback(response);
-
     socket.to(GLOBAL_ROOM).emit("message", JSON.stringify(response));
   });
 };

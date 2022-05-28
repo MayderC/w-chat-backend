@@ -5,7 +5,7 @@ const { sequelize } = require("../../../frameworks-drivers/database");
 export default class GlobalMessageService {
   constructor() {}
 
-  async insertMessage(user, msg) {
+  async insertMessage(user : any, msg : any) {
     try {
       return await GlobalMsg.create({
         msg,
@@ -16,7 +16,7 @@ export default class GlobalMessageService {
     }
   }
 
-  async getMessagesBetween(first, last) {}
+  async getMessagesBetween(first :  any, last : any) {}
 
   async geMessages() {
     return await sequelize.query(
