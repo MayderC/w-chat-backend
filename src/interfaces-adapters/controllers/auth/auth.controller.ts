@@ -9,8 +9,8 @@ export default class AuthController {
 
   _authService;
 
-  constructor(authService : AuthService){
-    this._authService = authService
+  constructor(){
+    this._authService = new AuthService()
   }
 
    userVerify = async (req : Express.Request, res : Express.Response) => {

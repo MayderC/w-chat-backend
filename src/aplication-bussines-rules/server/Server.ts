@@ -57,20 +57,15 @@ class Server implements IServer {
   }
   routes() {
 
-    this.authRoutes()
+    
+    this.app.use("/api/auth", auth(new AuthController()));
 
 
     this.app.use("/api/user", user);
   }
 
 
-  //routes
-  authRoutes(){
-    const authService = new AuthService();
-    const authController = new AuthController(authService);
 
-    this.app.use("/api/auth", auth(authController));
-  }
 
   userRoutes(){
     // service instance

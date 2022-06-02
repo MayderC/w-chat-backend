@@ -1,5 +1,5 @@
 import  GlobalMessage  from "../../../aplication-bussines-rules/services/global-msg/messages";
-import IGlobalMessageRequest from "../../../enterprise-bussines-rules/Entities/socket-response-requests/IGlobalMessageRequest";
+import IGlobalMessageRequest from "../../../enterprise-bussines-rules/Entities/message/IGlobalMessageRequest";
 const { GLOBAL_ROOM } = require("../Rooms/names");
 const global_message = new GlobalMessage();
 
