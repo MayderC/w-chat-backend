@@ -1,22 +1,23 @@
 const { User } = require("../../models/user.model");
 const { createToken, decodeToken } = require("../..//helpers/jsonwebtoken");
 const bcrypt = require("bcrypt");
+const {v4 : uuidv4} = require('uuid')
+
 
 class AuthService {
   constructor() {}
 
   async register(username, password) {
-    if (!username || !password) return false;
 
     try {
       const passHashed = this.encryptPassword(password);
       const userSaved = await User.create({
+        id: uuidv4(),
         username: username,
         password: passHashed,
       });
-      const token = await createToken({ id: userSaved.id });
       const user = { username: userSaved.username, id: userSaved.id };
-      return { token, user };
+      return { user };
     } catch (error) {
       return false;
     }

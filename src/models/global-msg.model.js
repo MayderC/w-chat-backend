@@ -4,7 +4,7 @@ const { User } = require("./user.model");
 
 const GlobalMsg = sequelize.define("global_message", {
   uid: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     foreignKey: true,
     references: {
       model: User,
