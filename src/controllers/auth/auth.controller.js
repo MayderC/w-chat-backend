@@ -17,7 +17,6 @@ const userRegister = async (req, res) => {
 
   data.token =  await createToken({ id: data.user.id });
 
-  console.log(data)
 
   return data ? res.send({ data }) : res.send({ msg: "Error" });
 };
