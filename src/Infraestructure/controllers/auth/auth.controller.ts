@@ -1,6 +1,6 @@
-import AuthService from "../../../aplication-bussines-rules/services/auth/auth.service";
+import AuthService from "../../../Application/services/auth/auth.service";
 const {decodeToken, createToken} = require("../../helpers/jsonwebtoken")
-import Express from "express";
+import {Request, Response} from "express";
 
 
 
@@ -13,7 +13,7 @@ export default class AuthController {
     this._authService = new AuthService()
   }
 
-   userVerify = async (req : Express.Request, res : Express.Response) => {
+   userVerify = async (req : Request, res : Response) => {
 
     const payload = decodeToken(req.headers["token"] || "");
     if (!payload) return res.status(401).send({msg : "Error"});
@@ -23,7 +23,7 @@ export default class AuthController {
     return data ? res.send(data) : res.send({ msg: "Error" });
   };
   
-   userRegister = async (req : Express.Request, res : Express.Response) => {
+   userRegister = async (req : Request, res : Response) => {
 
     const { username, password } = req.body;
     if(!username || !password) return res.status(400).send({ msg: "Error" })
@@ -41,7 +41,7 @@ export default class AuthController {
     }
   };
   
-   userLogin = async (req : any, res : any) => {
+   userLogin = async (req : Request, res: Response) => {
     const { username, password } = req.body;
     if(!username || !password) return res.send({ msg: "Error" })
 

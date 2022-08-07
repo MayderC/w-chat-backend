@@ -8,8 +8,8 @@ const { sequelize } = require("../../frameworks-drivers/database");
 const { socketController } = require("../../interfaces-adapters/socket/controller");
 const { socketAuthorization } = require("../../interfaces-adapters/middlewares/socketAuthorization");
 
-import AuthController from '../../interfaces-adapters/controllers/auth/auth.controller';
-import AuthService from '../services/auth/auth.service'
+import AuthController from '../controllers/auth/auth.controller';
+import AuthService from '../../Application/services/auth/auth.service'
 // socket
 
 const http = require("http");
