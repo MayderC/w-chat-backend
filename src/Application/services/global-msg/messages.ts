@@ -1,11 +1,11 @@
-const { GlobalMsg } = require("../../../enterprise-bussines-rules/models/global-msg.model");
+const { GlobalMsg } = require("../../models/global-msg.model");
 const { QueryTypes } = require("sequelize");
-const { sequelize } = require("../../../frameworks-drivers/database");
+const { sequelize } = require("../../../Infraestructure/database");
 
-export default class GlobalMessageService {
+export class GlobalMessageService {
   constructor() {}
 
-  async insertMessage(user : any, msg : any) {
+  async insertMessage(user: any, msg: any) {
     try {
       return await GlobalMsg.create({
         msg,
@@ -16,7 +16,7 @@ export default class GlobalMessageService {
     }
   }
 
-  async getMessagesBetween(first :  any, last : any) {}
+  async getMessagesBetween(first: any, last: any) {}
 
   async geMessages() {
     return await sequelize.query(
@@ -27,5 +27,3 @@ export default class GlobalMessageService {
     );
   }
 }
-
-

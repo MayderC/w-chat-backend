@@ -1,30 +1,26 @@
 const express = require("express");
-import IServer from './IServer';
-import IEnvronment from '../../config/environments/IEnvironment';
+import IServer from "./IServer";
+import IEnvronment from "../../config/environments/IEnvironment";
+import auth from "../routes/auth.routes";
 const cors = require("cors");
-const auth = require("../../interfaces-adapters/routes/auth.routes");
-const user = require("../../interfaces-adapters/routes/user.routes");
-const { sequelize } = require("../../frameworks-drivers/database");
-const { socketController } = require("../../interfaces-adapters/socket/controller");
-const { socketAuthorization } = require("../../interfaces-adapters/middlewares/socketAuthorization");
+const { sequelize } = require("../database");
+const { socketController } = require("../socket/controller");
+const { socketAuthorization } = require("../middlewares/socketAuthorization");
 
-import AuthController from '../controllers/auth/auth.controller';
-import AuthService from '../../Application/services/auth/auth.service'
-// socket
+import { AuthController } from "../controllers/auth/auth.controller";
 
 const http = require("http");
 const { Server: serverSocket } = require("socket.io");
 
-class Server implements IServer {
-
+export class Server implements IServer {
   private app;
   private server;
   private io;
   private PORT;
   private PATH;
-  _env : string;
+  _env: string;
   constructor(ENV: IEnvronment) {
-    this._env = "test"
+    this._env = "test";
     this.app = express();
     this.server = http.createServer(this.app);
     this.io = new serverSocket(this.server, {
@@ -56,18 +52,10 @@ class Server implements IServer {
     this.io.use(socketAuthorization);
   }
   routes() {
-
-    
     this.app.use("/api/auth", auth(new AuthController()));
-
-
-    this.app.use("/api/user", user);
   }
 
-
-
-
-  userRoutes(){
+  userRoutes() {
     // service instance
     // constroller instance(service)
     // use user route(constroller)
@@ -87,5 +75,3 @@ class Server implements IServer {
     });
   }
 }
-
-module.exports = { Server };

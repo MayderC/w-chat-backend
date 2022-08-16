@@ -1,16 +1,16 @@
-import  GlobalMessage  from "../../../Application/services/global-msg/messages";
+import { GlobalMessageService } from "../../../Application/services/global-msg/messages";
 import IGlobalMessageRequest from "../../../Application/Entities/message/IGlobalMessageRequest";
 const { GLOBAL_ROOM } = require("../Rooms/names");
-const global_message = new GlobalMessage();
+const global_message = new GlobalMessageService();
 
-const onMessage = (socket : any) => {
-  socket.on("send-message", async (payload : any, callback : Function) => {
+const onMessage = (socket: any) => {
+  socket.on("send-message", async (payload: any, callback: Function) => {
     const { id, msg, date } = await global_message.insertMessage(
       socket.userInfo,
       payload.msg
     );
 
-    const response : IGlobalMessageRequest = {
+    const response: IGlobalMessageRequest = {
       id_message: id,
       message: msg,
       date,

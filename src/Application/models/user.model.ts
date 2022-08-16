@@ -1,4 +1,4 @@
-import  sequelize  from '../../Infraestructure/database/index'
+import { sequelize } from "../../Infraestructure/database/index";
 const { DataTypes } = require("sequelize");
 
 const User = sequelize.define("user", {

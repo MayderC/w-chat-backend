@@ -1,7 +1,7 @@
-const { AuthService } = require("../../aplication-bussines-rules/services/auth/auth.service");
+const { AuthService } = require("../../Application/services/auth/auth.service");
 const auth = new AuthService();
 
-const socketAuthorization = async (socket : any, next : any) => {
+export const socketAuthorization = async (socket: any, next: any) => {
   const token = socket.handshake.auth.token;
   const data = await auth.getProfile(token);
   if (data) {
@@ -15,5 +15,3 @@ const socketAuthorization = async (socket : any, next : any) => {
     return next(new Error("Authentication error"));
   }
 };
-
-module.exports = { socketAuthorization };
