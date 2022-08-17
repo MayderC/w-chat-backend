@@ -1,6 +1,6 @@
 const { GLOBAL_ROOM } = require("../Rooms/names");
 const { Socket } = require("socket.io");
-import { GlobalMessageService } from "../../../Application/services/global-msg/messages";
+import { GlobalMessageService } from "../../../Application/Adapters/services/global-msg/messages";
 const message = new GlobalMessageService();
 
 export const joinRoom = (socket: typeof Socket) => {

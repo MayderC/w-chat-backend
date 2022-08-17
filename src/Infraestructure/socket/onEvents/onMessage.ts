@@ -1,4 +1,4 @@
-import { GlobalMessageService } from "../../../Application/services/global-msg/messages";
+import { GlobalMessageService } from "../../../Application/Adapters/services/global-msg/messages";
 import IGlobalMessageRequest from "../../../Application/Entities/message/IGlobalMessageRequest";
 const { GLOBAL_ROOM } = require("../Rooms/names");
 const global_message = new GlobalMessageService();

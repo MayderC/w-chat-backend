@@ -1,4 +1,6 @@
-const { AuthService } = require("../../Application/services/auth/auth.service");
+const {
+  AuthService,
+} = require("../../Application/Adapters/services/auth/auth.service");
 const auth = new AuthService();
 
 export const socketAuthorization = async (socket: any, next: any) => {

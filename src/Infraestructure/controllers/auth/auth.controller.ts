@@ -1,4 +1,4 @@
-import { AuthService } from "../../../Application/services/auth/auth.service";
+import { AuthService } from "../../../Application/Adapters/services/auth/auth.service";
 const { decodeToken, createToken } = require("../../helpers/jsonwebtoken");
 import { Request, Response } from "express";
 
