@@ -9,15 +9,16 @@ export class AuthController {
     this._authService = new AuthService();
   }
 
-  userVerify = async (req: Request, res: Response) => {
+  async userVerify(req: Request, res: Response){
     const payload = decodeToken(req.headers["token"] || "");
-    if (!payload) return res.status(401).send({ msg: "Error" });
+    if (payload.id === "") return res.status(401).send({ msg: "Error" });
+
 
     const data = await this._authService.getProfile(payload.id);
     return data ? res.send(data) : res.send({ msg: "Error" });
   };
 
-  userRegister = async (req: Request, res: Response) => {
+  async userRegister (req: Request, res: Response){
     const { username, password } = req.body;
     if (!username || !password) return res.status(400).send({ msg: "Error" });
 
@@ -25,7 +26,7 @@ export class AuthController {
       const user = await this._authService.register(username, password);
       if (!user) return res.send({ msg: "Error" });
 
-      const token = createToken({ id: user.id });
+      const token = await createToken({ id: user.id });
       const data = { user, token };
       return res.send({ data });
     } catch (error) {
@@ -33,7 +34,7 @@ export class AuthController {
     }
   };
 
-  userLogin = async (req: Request, res: Response) => {
+  async userLogin (req: Request, res: Response) {
     const { username, password } = req.body;
     if (!username || !password) return res.send({ msg: "Error" });
 

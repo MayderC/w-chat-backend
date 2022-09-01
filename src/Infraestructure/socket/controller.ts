@@ -1,9 +1,8 @@
 const { onMessage } = require("./onEvents/onMessage");
-const { joinRoom } = require("./onEvents/onJoinGlobalRoom");
+import { joinGlobalRoom } from "./onEvents/onJoinGlobalRoom";
 
-const socketController = (socket: any) => {
-  joinRoom(socket);
+export const socketController = (socket: any) => {
+  joinGlobalRoom(socket);
   onMessage(socket);
+  
 };
-
-module.exports = { socketController };

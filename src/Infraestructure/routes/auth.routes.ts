@@ -3,9 +3,9 @@ const express = require("express");
 export default (controller: any) => {
   const router = express.Router();
 
-  router.post("/register", controller.userRegister);
-  router.post("/login", controller.userLogin);
-  router.get("/verify", controller.userVerify);
+  router.post("/register", controller.userRegister.bind(controller));
+  router.post("/login", controller.userLogin.bind(controller));
+  router.get("/verify", controller.userVerify.bind(controller));
 
   return router;
 };

@@ -24,7 +24,7 @@ export class AuthService {
     return user;
   }
 
-  async getProfile(id: string): Promise<IUser | null> {
+  async getProfile(id: number): Promise<IUser | null> {
     const user = await User.findByPk(id);
     return user ? { username: user.username, id: user.id } : null;
   }

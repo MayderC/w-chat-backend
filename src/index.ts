@@ -1,7 +1,7 @@
 const env: IEnvronment = require("./config/environments");
-import IServer from "./Infraestructure/server/IServer";
+import IServer from "./Infraestructure/webserver/IServer";
 import IEnvronment from "./config/environments/IEnvironment";
-const { Server } = require("./Infraestructure/server/Server");
+const { Server } = require("./Infraestructure/webserver/Server");
 
 const main = async () => {
   const app: IServer = new Server(env);

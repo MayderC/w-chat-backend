@@ -1,16 +1,14 @@
-const express = require("express");
+import auth from "../routes/auth.routes";
+import cors from "cors";
+import express from "express";
+import http from "http";
 import IServer from "./IServer";
 import IEnvronment from "../../config/environments/IEnvironment";
-import auth from "../routes/auth.routes";
-const cors = require("cors");
-const { sequelize } = require("../database");
-const { socketController } = require("../socket/controller");
-const { socketAuthorization } = require("../middlewares/socketAuthorization");
-
 import { AuthController } from "../controllers/auth/auth.controller";
-
-const http = require("http");
-const { Server: serverSocket } = require("socket.io");
+import { sequelize } from "../database";
+import { Server as serverSocket } from "socket.io";
+import { socketController } from "../socket/controller";
+import { socketAuthorization } from "../middlewares/socketAuthorization";
 
 export class Server implements IServer {
   private app;
@@ -64,7 +62,6 @@ export class Server implements IServer {
   //socket controllers
   socket() {
     this.io.on("connection", socketController);
-    console.log("SOCKET ON");
   }
   start() {
     return new Promise<void>((resolve, reject) => {

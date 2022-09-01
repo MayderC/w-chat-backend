@@ -9,7 +9,7 @@ interface IJwtPayload {
 }
 
 
-const createToken = (payload : IJwtPayload) => {
+export const createToken = (payload : IJwtPayload) => {
   const SECOND = 1000;
   const MINUTE = 60;
   const HOUR = 60;
@@ -31,13 +31,11 @@ const createToken = (payload : IJwtPayload) => {
   });
 };
 
-const decodeToken = (token : string) : IJwtPayload | boolean => {
+export const decodeToken = (token : string) : IJwtPayload => {
   try {
     const payload = jwt.verify(token, KEYWORD);
     return payload;
   } catch (error) {
-    return false;
+    return {exp: "", id: ""};
   }
 };
-
-module.exports = { createToken, decodeToken };

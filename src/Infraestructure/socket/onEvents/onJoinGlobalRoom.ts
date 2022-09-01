@@ -3,13 +3,14 @@ const { Socket } = require("socket.io");
 import { GlobalMessageService } from "../../../Application/Adapters/services/global-msg/messages";
 const message = new GlobalMessageService();
 
-export const joinRoom = (socket: typeof Socket) => {
-  socket.on("join-global", async () => {
+export const joinGlobalRoom = (socket: typeof Socket) => {
+  socket.on("join-global", async ( userConected: any) => {
+
     socket.join(GLOBAL_ROOM);
     const data = await message.geMessages();
-    socket.emit(
-      "joined",
-      JSON.stringify({ user: socket.userInfo.data, messages: data })
-    );
+    const msg = JSON.stringify({ user: socket.userInfo.data, messages: data })
+    socket.emit("joined", msg)
+    socket.broadcast.emit('online-user-list', userConected)
+
   });
 };
