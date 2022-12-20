@@ -1,12 +1,12 @@
-const {
-  AuthService,
-} = require("../../Application/Adapters/services/auth/auth.service");
+import { AuthService } from "../../../Adapters/services/auth/auth.service";
+import { Socket } from "socket.io";
+
 const auth = new AuthService();
-import {decodeToken} from '../helpers/jsonwebtoken' 
+import { decodeToken } from "../helpers/jsonwebtoken";
 
 export const socketAuthorization = async (socket: any, next: any) => {
   const token = socket.handshake.auth.token;
-  const data = await auth.getProfile(Number(decodeToken(token).id) );
+  const data = await auth.getProfile(Number(decodeToken(token).id));
   if (data) {
     socket.userInfo = {
       data: data,

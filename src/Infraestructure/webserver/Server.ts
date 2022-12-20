@@ -1,14 +1,14 @@
-import auth from "../routes/auth.routes";
+import auth from "./routes/auth.routes";
 import cors from "cors";
 import express from "express";
 import http from "http";
 import IServer from "./IServer";
 import IEnvronment from "../../config/environments/IEnvironment";
-import { AuthController } from "../controllers/auth/auth.controller";
+import { AuthController } from "./controllers/auth/auth.controller";
 import { sequelize } from "../database";
 import { Server as serverSocket } from "socket.io";
 import { socketController } from "../socket/controller";
-import { socketAuthorization } from "../middlewares/socketAuthorization";
+import { socketAuthorization } from "./middlewares/socketAuthorization";
 
 export class Server implements IServer {
   private app;
@@ -36,7 +36,7 @@ export class Server implements IServer {
   }
   async conexion() {
     await sequelize.authenticate();
-    await sequelize.sync({ force: true });
+    //await sequelize.sync({ force: true });
     console.log("Postgres ON");
   }
   middlewares() {
@@ -50,7 +50,7 @@ export class Server implements IServer {
     this.io.use(socketAuthorization);
   }
   routes() {
-    this.app.use("/api/auth", auth(new AuthController()));
+    this.app.use(this.PATH + "/auth", auth(new AuthController()));
   }
 
   userRoutes() {

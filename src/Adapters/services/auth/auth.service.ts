@@ -1,5 +1,5 @@
-const { User } = require("../../../models/user.model");
-import { EncryptPassword } from "../../../helpers/encryptPassword";
+import { User } from "../../../Infraestructure/database/models/user.model";
+import { EncryptPassword } from "../../helpers/encryptPassword";
 
 interface IUser {
   username: string;

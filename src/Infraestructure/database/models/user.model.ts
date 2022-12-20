@@ -1,7 +1,7 @@
-import { sequelize } from "../../Infraestructure/database/index";
+import { sequelize } from "../index";
 const { DataTypes } = require("sequelize");
 
-const User = sequelize.define("user", {
+export const User = sequelize.define("user", {
   username: {
     type: DataTypes.STRING,
     unique: true,
@@ -10,5 +10,3 @@ const User = sequelize.define("user", {
     type: DataTypes.STRING,
   },
 });
-
-module.exports = { User };

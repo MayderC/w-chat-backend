@@ -1,8 +1,8 @@
-import { sequelize } from "../../Infraestructure/database/index";
+import { sequelize } from "../index";
 const { DataTypes } = require("sequelize");
 const { User } = require("./user.model");
 
-const GlobalMsg = sequelize.define("global_message", {
+export const GlobalMsg = sequelize.define("global_message", {
   uid: {
     type: DataTypes.INTEGER,
     foreignKey: true,
@@ -21,5 +21,3 @@ const GlobalMsg = sequelize.define("global_message", {
     type: DataTypes.TEXT,
   },
 });
-
-module.exports = { GlobalMsg };

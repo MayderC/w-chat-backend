@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+
+  db_mychat:
+    image: postgres:latest
+    restart: always 
+    container_name: mychat
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB : ${DB_NAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - "./data:/var/lib/postgressql/data"
+    ports:
+      - "5431:5432"

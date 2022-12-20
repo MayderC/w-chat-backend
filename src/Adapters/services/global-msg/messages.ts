@@ -1,6 +1,6 @@
-const { GlobalMsg } = require("../../../models/global-msg.model");
+import { GlobalMsg } from "../../../Infraestructure/database/models/global-msg.model";
 const { QueryTypes } = require("sequelize");
-const { sequelize } = require("../../../../Infraestructure/database/index");
+import { sequelize } from "../../../Infraestructure/database/index";
 
 export class GlobalMessageService {
   constructor() {}
