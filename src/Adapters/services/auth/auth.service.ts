@@ -25,8 +25,12 @@ export class AuthService {
   }
 
   async getProfile(id: number): Promise<IUser | null> {
-    const user = await User.findByPk(id);
-    return user ? { username: user.username, id: user.id } : null;
+    try {
+      const user = await User.findByPk(id);
+      return user ? { username: user.username, id: user.id } : null;
+    } catch (error) {
+      return null;
+    }
   }
 
   async login(username: string, password: string): Promise<IUser | null> {

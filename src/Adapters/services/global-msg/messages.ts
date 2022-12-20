@@ -19,11 +19,15 @@ export class GlobalMessageService {
   async getMessagesBetween(first: any, last: any) {}
 
   async geMessages() {
-    return await sequelize.query(
-      "SELECT global_messages.id AS id_message, global_messages.msg AS message, global_messages.date AS date, users.id AS id_user, users.username AS username FROM global_messages INNER JOIN users ON users.id = global_messages.uid ORDER BY global_messages.date ASC",
-      {
-        type: QueryTypes.SELECT,
-      }
-    );
+    try {
+      return await sequelize.query(
+        "SELECT global_messages.id AS id_message, global_messages.msg AS message, global_messages.date AS date, users.id AS id_user, users.username AS username FROM global_messages INNER JOIN users ON users.id = global_messages.uid ORDER BY global_messages.date ASC",
+        {
+          type: QueryTypes.SELECT,
+        }
+      );
+    } catch (error) {
+      throw "User not found";
+    }
   }
 }
