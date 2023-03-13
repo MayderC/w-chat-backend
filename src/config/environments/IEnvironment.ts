@@ -8,4 +8,5 @@ export default interface IEnvronment {
   DB_HOST: string;
   PORT: string;
   NODE_ENV: string;
+  CLIENT_URL: string;
 }

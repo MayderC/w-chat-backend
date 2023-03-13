@@ -1,14 +1,13 @@
-import auth from "./routes/auth.routes";
 import cors from "cors";
 import express from "express";
 import http from "http";
 import IServer from "./IServer";
 import IEnvronment from "../../config/environments/IEnvironment";
-import { AuthController } from "./controllers/auth/auth.controller";
 import { sequelize } from "../database";
 import { Server as serverSocket } from "socket.io";
 import { socketController } from "../socket/controller";
 import { socketAuthorization } from "./middlewares/socketAuthorization";
+import { AuthRoutes } from "./routes/auth.routes";
 
 export class Server implements IServer {
   private app;
@@ -16,9 +15,11 @@ export class Server implements IServer {
   private io;
   private PORT;
   private PATH;
-  _env: string;
-  constructor(ENV: IEnvronment) {
-    this._env = "test";
+  private readonly _env: IEnvronment;
+  private _authRoutes: AuthRoutes;
+  constructor(env: IEnvronment, authRoutes: AuthRoutes) {
+    this._authRoutes = authRoutes;
+    this._env = env;
     this.app = express();
     this.server = http.createServer(this.app);
     this.io = new serverSocket(this.server, {
@@ -26,7 +27,7 @@ export class Server implements IServer {
         origin: process.env.CLIENT_URL,
       },
     });
-    this.PORT = ENV.PORT;
+    this.PORT = this._env.PORT;
     this.PATH = "/api";
 
     this.middlewares();
@@ -50,7 +51,7 @@ export class Server implements IServer {
     this.io.use(socketAuthorization);
   }
   routes() {
-    this.app.use(this.PATH + "/auth", auth(new AuthController()));
+    this.app.use(this.PATH + "/auth", this._authRoutes.router);
   }
 
   userRoutes() {
@@ -63,12 +64,7 @@ export class Server implements IServer {
   socket() {
     this.io.on("connection", socketController);
   }
-  start() {
-    return new Promise<void>((resolve, reject) => {
-      this.server.listen(this.PORT, () => {
-        console.log("SERVER ON");
-        resolve();
-      });
-    });
+  async start() {
+    await this.server.listen(this.PORT);
   }
 }

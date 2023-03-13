@@ -3,10 +3,10 @@ const { decodeToken, createToken } = require("../../helpers/jsonwebtoken");
 import { Request, Response } from "express";
 
 export class AuthController {
-  _authService;
+  private readonly _authService;
 
-  constructor() {
-    this._authService = new AuthService();
+  constructor(authService: AuthService) {
+    this._authService = authService;
   }
 
   async userVerify(req: Request, res: Response) {

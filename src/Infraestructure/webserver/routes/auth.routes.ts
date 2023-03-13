@@ -1,11 +1,20 @@
-const express = require("express");
+import { AuthController } from "../controllers/auth/auth.controller";
+import { Router } from "express";
 
-export default (controller: any) => {
-  const router = express.Router();
+export class AuthRoutes {
+  private _router;
 
-  router.post("/register", controller.userRegister.bind(controller));
-  router.post("/login", controller.userLogin.bind(controller));
-  router.get("/verify", controller.userVerify.bind(controller));
+  constructor(authController: AuthController) {
+    this._router = Router();
+    this._router.post(
+      "/register",
+      authController.userRegister.bind(authController)
+    );
+    this._router.post("/login", authController.userLogin.bind(authController));
+    this._router.get("/verify", authController.userVerify.bind(authController));
+  }
 
-  return router;
-};
+  get router() {
+    return this._router;
+  }
+}

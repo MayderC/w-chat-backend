@@ -1,11 +1,15 @@
-import env from "./config/environments/index";
-const { Server } = require("./Infraestructure/webserver/Server");
+import { DependencyContainer } from "./config/container/DependencyContainer";
+import IServer from "./Infraestructure/webserver/IServer";
+
+const dependency = new DependencyContainer();
 
 const main = async () => {
-  const app = new Server(env);
-  await app.start();
-  console.log(`PORT: ${env.PORT}`);
-  console.log(`ENVIRONMENT: ${env.NODE_ENV}`);
+  try {
+    const server: IServer = dependency.container.resolve("server");
+    await server.start();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 main();
