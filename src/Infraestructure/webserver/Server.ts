@@ -7,7 +7,7 @@ import { sequelize } from "../database";
 import { Server as serverSocket } from "socket.io";
 import { socketController } from "../socket/controller";
 import { socketAuthorization } from "./middlewares/socketAuthorization";
-import { AuthRoutes } from "./routes/auth.routes";
+import { AuthRoutes } from "./routes/AuthRoutes";
 
 export class Server implements IServer {
   private app;
@@ -54,13 +54,6 @@ export class Server implements IServer {
     this.app.use(this.PATH + "/auth", this._authRoutes.router);
   }
 
-  userRoutes() {
-    // service instance
-    // constroller instance(service)
-    // use user route(constroller)
-  }
-
-  //socket controllers
   socket() {
     this.io.on("connection", socketController);
   }

@@ -1,4 +1,4 @@
-import { AuthService } from "../../../Adapters/services/auth/auth.service";
+import { AuthService } from "../../../Adapters/services/auth/AuthService";
 import { Socket } from "socket.io";
 
 const auth = new AuthService();

@@ -1,8 +1,7 @@
-const { onMessage } = require("./onEvents/onMessage");
 import { joinGlobalRoom } from "./onEvents/onJoinGlobalRoom";
+import { onGlobalMessage } from "./onEvents/onGlobalMessage";
 
 export const socketController = (socket: any) => {
   joinGlobalRoom(socket);
-  onMessage(socket);
-  
+  onGlobalMessage(socket);
 };

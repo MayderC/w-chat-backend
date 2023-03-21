@@ -4,9 +4,10 @@ import { InjectionMode } from "awilix/lib/injection-mode";
 import { asClass, asFunction, asValue } from "awilix/lib/resolvers";
 import { Server } from "../../Infraestructure/webserver/Server";
 import environments from "../environments/index";
-import { AuthController } from "./../../Infraestructure/webserver/controllers/auth/auth.controller";
-import { AuthService } from "./../../Adapters/services/auth/auth.service";
-import { AuthRoutes } from "./../../Infraestructure/webserver/routes/auth.routes";
+import { AuthController } from "../../Infraestructure/webserver/controllers/auth/AuthController";
+import { AuthService } from "../../Adapters/services/auth/AuthService";
+import { AuthRoutes } from "../../Infraestructure/webserver/routes/AuthRoutes";
+import {AuthRepository} from "../../Adapters/repositories/AuthRepository";
 
 export class DependencyContainer {
   private readonly _container: AwilixContainer;
@@ -17,6 +18,7 @@ export class DependencyContainer {
     });
 
     this.environmentsVars();
+    this.repositories();
     this.services();
     this.controllers();
     this.routes();
@@ -48,5 +50,10 @@ export class DependencyContainer {
     this._container.register({
       env: asValue(environments),
     });
+  }
+  repositories(){
+    this._container.register({
+      authRepository: asClass(AuthRepository).scoped()
+    })
   }
 }

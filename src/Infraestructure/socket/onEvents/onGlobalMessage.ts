@@ -4,7 +4,7 @@ import { E_MESSAGE, O_SEND_MESSAGE } from "./eventNames";
 const global_message = new GlobalMessageService();
 const { GLOBAL_ROOM } = require("../Rooms/names");
 
-const onMessage = (socket: any) => {
+export const onGlobalMessage = (socket: any) => {
   socket.on(O_SEND_MESSAGE, async (payload: any, callback: Function) => {
     const { id, msg, date } = await global_message.insertMessage(
       socket.userInfo,
@@ -23,5 +23,3 @@ const onMessage = (socket: any) => {
     socket.to(GLOBAL_ROOM).emit(E_MESSAGE, JSON.stringify(response));
   });
 };
-
-module.exports = { onMessage };

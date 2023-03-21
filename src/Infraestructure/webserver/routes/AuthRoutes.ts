@@ -1,4 +1,4 @@
-import { AuthController } from "../controllers/auth/auth.controller";
+import { AuthController } from "../controllers/auth/AuthController";
 import { Router } from "express";
 import { validations } from "../middlewares/valitadionResults";
 import { check, header } from "express-validator";
