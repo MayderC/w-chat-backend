@@ -1,6 +1,6 @@
 import { GlobalMsg } from "../../../Infraestructure/database/models/global-msg.model";
 const { QueryTypes } = require("sequelize");
-import { sequelize } from "../../../Infraestructure/database/index";
+import { sequelize } from "../../../Infraestructure/database";
 
 export class GlobalMessageService {
   constructor() {}
