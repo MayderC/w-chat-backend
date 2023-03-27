@@ -4,7 +4,7 @@ import http from "http";
 import IServer from "./IServer";
 import IEnvronment from "../../config/environments/IEnvironment";
 import { sequelize } from "../database";
-import { Server as serverSocket } from "socket.io";
+import { Server as ServerSocket } from "socket.io";
 import { socketController } from "../socket/controller";
 import { socketAuthorization } from "./middlewares/socketAuthorization";
 import { AuthRoutes } from "./routes/AuthRoutes";
@@ -22,7 +22,7 @@ export class Server implements IServer {
     this._env = env;
     this.app = express();
     this.server = http.createServer(this.app);
-    this.io = new serverSocket(this.server, {
+    this.io = new ServerSocket(this.server, {
       cors: {
         origin: process.env.CLIENT_URL,
       },
@@ -55,7 +55,9 @@ export class Server implements IServer {
   }
 
   socket() {
-    this.io.on("connection", socketController);
+    this.io.on("connection", (socket)=>{
+      socketController(socket, this.io)
+    });
   }
   async start() {
     await this.server.listen(this.PORT);
