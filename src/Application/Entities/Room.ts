@@ -1,8 +1,8 @@
 import {User} from "./User";
-import {Mesasge} from "./Message";
+import {Message} from "./Message";
 
 export interface Room {
     id: string
     users: Array<User>
-    messages: Array<Mesasge>
+    messages: Array<Message>
 }

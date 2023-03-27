@@ -9,4 +9,5 @@ export const validations = (req: Request, res: Response, next: Function) => {
   if (!result.isEmpty()) {
     return res.json({ errors: result.array() });
   }
+  next()
 };

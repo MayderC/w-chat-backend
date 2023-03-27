@@ -16,6 +16,7 @@ export class AuthController {
   }
 
   async userRegister(req: Request, res: Response) {
+    console.log("Refistrandome desde el constroldor")
     try {
       const { username, password } = req.body;
       const user = await this._authService.register(username, password);
@@ -24,6 +25,7 @@ export class AuthController {
       const token = await createToken({ id: user.id });
       return res.send({ data: { user, token } });
     } catch (error) {
+      console.log(error)
       return res.send({ msg: "Error" });
     }
   }

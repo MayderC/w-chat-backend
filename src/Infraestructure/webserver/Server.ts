@@ -37,7 +37,7 @@ export class Server implements IServer {
   }
   async conexion() {
     await sequelize.authenticate();
-    //await sequelize.sync({ force: true });
+    await sequelize.sync({ force: true });
     console.log("Postgres ON");
   }
   middlewares() {
@@ -59,5 +59,6 @@ export class Server implements IServer {
   }
   async start() {
     await this.server.listen(this.PORT);
+    console.log('Listen on port '+ this.PORT)
   }
 }

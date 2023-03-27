@@ -10,11 +10,12 @@ interface IUser {
 export class AuthService {
   private readonly _repository : AuthRepository;
 
-  constructor(authRepository : any) {
+  constructor(authRepository : AuthRepository) {
     this._repository = authRepository;
   }
 
   async register(username: string, password: string): Promise<IUser> {
+    console.log("rei¿gistramdome")
     const passHashed = EncryptPassword.encryptPassword(password);
     const userSaved = await User.create({
       username: username,
