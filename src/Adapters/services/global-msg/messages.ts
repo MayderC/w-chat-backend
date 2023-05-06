@@ -12,6 +12,7 @@ export class GlobalMessageService {
         uid: user.data.id,
       });
     } catch (error) {
+      console.log(error)
       return false;
     }
   }

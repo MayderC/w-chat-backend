@@ -33,8 +33,7 @@ export const createToken = (payload: IJwtPayload) => {
 
 export const decodeToken = (token: string): IJwtPayload => {
   try {
-    const payload = jwt.verify(token, KEYWORD);
-    return payload;
+    return jwt.verify(token, KEYWORD);
   } catch (error) {
     return { exp: "", id: "" };
   }

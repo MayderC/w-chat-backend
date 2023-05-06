@@ -14,9 +14,14 @@ export class AuthRepository {
     }
 
     async getById(id: string): Promise<User>{
-        const user = await userModel.findByPk(id);
-        if(!user) throw "User not found"
-        return user
+        try {
+            const user = await userModel.findByPk(Number(id))
+            if(!user) throw "User not found"
+            return  user
+        }catch (e) {
+             throw "User not found"
+        }
+
     }
 
 

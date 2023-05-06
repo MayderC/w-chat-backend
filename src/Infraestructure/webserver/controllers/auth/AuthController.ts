@@ -11,8 +11,12 @@ export class AuthController {
 
   async userVerify(req: Request, res: Response) {
     const payload = decodeToken(req.headers["token"]);
-    const data = await this._authService.getProfile(payload.id);
-    return data ? res.send(data) : res.send({ msg: "Error" });
+    try {
+      const data = await this._authService.getProfile(payload.id);
+      return data ? res.send(data) : res.send({ msg: "Error" });
+    }catch (e) {
+      return res.send({ msg: "Error" });
+    }
   }
 
   async userRegister(req: Request, res: Response) {
@@ -25,7 +29,7 @@ export class AuthController {
       const token = await createToken({ id: user.id });
       return res.send({ data: { user, token } });
     } catch (error) {
-      console.log(error)
+      console.log({error}, "controller")
       return res.send({ msg: "Error" });
     }
   }

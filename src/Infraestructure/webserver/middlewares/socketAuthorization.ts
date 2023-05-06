@@ -6,9 +6,11 @@ import { DependencyContainer } from '../../../config/container/DependencyContain
 
 export const socketAuthorization = async (socket: any, next: any) => {
   const token = socket.handshake.auth.token;
-  const dependecy = new DependencyContainer();
-  const auth: AuthService = dependecy.container.resolve('authService')
-  const data = auth.getProfile(decodeToken(token).id)
+  const dependency = new DependencyContainer();
+  const auth: AuthService = dependency.container.resolve('authService')
+  try {
+    console.log({token})
+    const data = await auth.getProfile(decodeToken(token).id)
   if (data) {
     socket.userInfo = {
       data: data,
@@ -18,5 +20,8 @@ export const socketAuthorization = async (socket: any, next: any) => {
   } else {
     return socket.disconnect();
     //return next(new Error("Authentication error"));
+  }
+  }catch (e) {
+    console.log(e)
   }
 };

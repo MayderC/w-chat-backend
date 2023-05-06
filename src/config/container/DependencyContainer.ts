@@ -8,6 +8,7 @@ import { AuthController } from "../../Infraestructure/webserver/controllers/auth
 import { AuthService } from "../../Adapters/services/auth/AuthService";
 import { AuthRoutes } from "../../Infraestructure/webserver/routes/AuthRoutes";
 import {AuthRepository} from "../../Adapters/repositories/AuthRepository";
+import {GlobalMessageService} from "../../Adapters/services/global-msg/messages";
 
 export class DependencyContainer {
   private readonly _container: AwilixContainer;
@@ -44,6 +45,7 @@ export class DependencyContainer {
   services() {
     this._container.register({
       authService: asClass(AuthService).scoped(),
+      globalMessageService: asClass(GlobalMessageService).scoped()
     });
   }
   environmentsVars() {

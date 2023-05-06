@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import http from "http";
 import IServer from "./IServer";
-import IEnvronment from "../../config/environments/IEnvironment";
+import IEnvironment from "../../config/environments/IEnvironment";
 import { sequelize } from "../database";
 import { Server as ServerSocket } from "socket.io";
 import { socketController } from "../socket/controller";
@@ -10,14 +10,14 @@ import { socketAuthorization } from "./middlewares/socketAuthorization";
 import { AuthRoutes } from "./routes/AuthRoutes";
 
 export class Server implements IServer {
-  private app;
-  private server;
-  private io;
-  private PORT;
-  private PATH;
-  private readonly _env: IEnvronment;
+  private readonly app;
+  private readonly server;
+  private readonly io;
+  private readonly PORT;
+  private readonly PATH;
+  private readonly _env: IEnvironment;
   private _authRoutes: AuthRoutes;
-  constructor(env: IEnvronment, authRoutes: AuthRoutes) {
+  constructor(env: IEnvironment, authRoutes: AuthRoutes) {
     this._authRoutes = authRoutes;
     this._env = env;
     this.app = express();
