@@ -4,7 +4,7 @@ import { validations } from "../middlewares/valitadionResults";
 import { check, header } from "express-validator";
 
 export class AuthRoutes {
-  private _router;
+  private readonly _router;
 
   constructor(authController: AuthController) {
     this._router = Router();

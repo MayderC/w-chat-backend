@@ -1,6 +1,7 @@
 import { AuthService } from "../../../../Adapters/services/auth/AuthService";
 const { decodeToken, createToken } = require("../../helpers/jsonwebtoken");
 import { Request, Response } from "express";
+import {STATUS, statusMSG} from "../../constants/http-codes";
 
 export class AuthController {
   private readonly _authService;
@@ -13,9 +14,11 @@ export class AuthController {
     const payload = decodeToken(req.headers["token"]);
     try {
       const data = await this._authService.getProfile(payload.id);
-      return data ? res.send(data) : res.send({ msg: "Error" });
+      return data
+        ? res.status(STATUS.OK).send(data)
+        : res.status(STATUS.BAD).send(statusMSG('Error'));
     }catch (e) {
-      return res.send({ msg: "Error" });
+      return res.status(STATUS.BAD).send(statusMSG('Error'));
     }
   }
 
