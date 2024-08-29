@@ -1,5 +1,6 @@
 import { AuthService } from "../../../../Adapters/services/auth/AuthService";
-const { decodeToken, createToken } = require("../../helpers/jsonwebtoken");
+
+import { decodeToken, createToken } from "../../helpers/jsonwebtoken";
 import { Request, Response } from "express";
 import {STATUS, statusMSG} from "../../constants/http-codes";
 
@@ -11,43 +12,42 @@ export class AuthController {
   }
 
   async userVerify(req: Request, res: Response) {
-    const payload = decodeToken(req.headers["token"]);
+
+    const token = req.headers['authorization']
+
+    const payload = decodeToken(token || "");
     try {
       const data = await this._authService.getProfile(payload.id);
       return data
         ? res.status(STATUS.OK).send(data)
-        : res.status(STATUS.BAD).send(statusMSG('Error'));
+        : res.status(STATUS.UNAUTHORIZED).send(statusMSG('Authentication error'));
     }catch (e) {
-      return res.status(STATUS.BAD).send(statusMSG('Error'));
+      return res.status(STATUS.UNAUTHORIZED).send(statusMSG('Authentication error'));
     }
   }
 
   async userRegister(req: Request, res: Response) {
-    console.log("Refistrandome desde el constroldor")
     try {
       const { username, password } = req.body;
-      const user = await this._authService.register(username, password);
-      if (!user) return res.send({ msg: "Error" });
-
-      const token = await createToken({ id: user.id });
+      const user = await this._authService.register({username, password});
+      if (!user) return res.status(STATUS.BAD).send(statusMSG('Registration failed'));
+      const token = await createToken({ id: user.id, exp: 1 });
       return res.send({ data: { user, token } });
     } catch (error) {
-      console.log({error}, "controller")
-      return res.send({ msg: "Error" });
+      return res.status(STATUS.BAD).send(statusMSG('Registration failed'));
     }
   }
 
   async userLogin(req: Request, res: Response) {
     const { username, password } = req.body;
     try {
-      const user = await this._authService.login(username, password);
-      if (!user) return res.send({ msg: "Error" });
-
-      const token = createToken({ id: user.id });
+      const user = await this._authService.login({username, password});
+      if (!user) return res.status(STATUS.UNAUTHORIZED).send({ msg: "Authentication failed" });
+      const token = await createToken({ id: user.id, exp: 1 });
       const data = { user, token };
       return res.send({ data });
     } catch (error) {
-      return res.send({ msg: "Error" });
+      return res.status(STATUS.UNAUTHORIZED).send({ msg: "Authentication failed" });
     }
   }
 }

@@ -3,4 +3,5 @@ import {IAuthLoginRequest, IAuthLoginResponse, IAuthRegisterRequest, IAuthRegist
 export default interface IAuthService {
     login(request: IAuthLoginRequest): Promise<IAuthLoginResponse>
     register(request: IAuthRegisterRequest): Promise<IAuthRegisterResponse>
+    getProfile(id: string): Promise<IAuthRegisterResponse>
 }

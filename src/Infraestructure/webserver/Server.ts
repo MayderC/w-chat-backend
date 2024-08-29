@@ -3,7 +3,7 @@ import express from "express";
 import http from "http";
 import IServer from "./IServer";
 import IEnvironment from "../../config/environments/IEnvironment";
-import { sequelize } from "../database";
+import { AppDataSource, sequelize } from "../database";
 import { Server as ServerSocket } from "socket.io";
 import { socketController } from "../socket/controller";
 import { socketAuthorization } from "./middlewares/socketAuthorization";
@@ -17,6 +17,7 @@ export class Server implements IServer {
   private readonly PATH;
   private readonly _env: IEnvironment;
   private _authRoutes: AuthRoutes;
+
   constructor(env: IEnvironment, authRoutes: AuthRoutes) {
     this._authRoutes = authRoutes;
     this._env = env;
@@ -36,9 +37,13 @@ export class Server implements IServer {
     this.socket();
   }
   async conexion() {
-    await sequelize.authenticate();
-    await sequelize.sync({ force: true });
-    console.log("Postgres ON");
+    //await sequelize.authenticate();
+    //await sequelize.sync({ force: true });
+    AppDataSource.initialize().then(() => {
+      console.log("Database connected");
+    }).catch((error) => {
+      console.log(error);
+    })
   }
   middlewares() {
     this.app.use(express.json());
@@ -55,12 +60,12 @@ export class Server implements IServer {
   }
 
   socket() {
-    this.io.on("connection", (socket)=>{
-      socketController(socket, this.io)
+    this.io.on("connection", (socket) => {
+      socketController(socket, this.io);
     });
   }
   async start() {
     await this.server.listen(this.PORT);
-    console.log('Listen on port '+ this.PORT)
+    console.log("Listen on port " + this.PORT);
   }
 }

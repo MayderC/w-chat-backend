@@ -14,4 +14,6 @@ export const STATUS: status = {
     INTERNAL_ERROR: 500,
 }
 
-export const  statusMSG = (msg: string): {msg: string}=>({msg})
+export const  statusMSG = (msg: string): {message: string}=>{
+    return {message: msg}
+}

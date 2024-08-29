@@ -14,7 +14,7 @@ export const createToken = (payload: IJwtPayload) => {
   const MINUTE = 60;
   const HOUR = 60;
 
-  const HOURS = 7;
+  const HOURS = payload.exp
 
   // HOURS const, in ms
   payload.exp = Math.floor(Date.now() / SECOND) + MINUTE * HOUR * HOURS;
@@ -25,7 +25,7 @@ export const createToken = (payload: IJwtPayload) => {
         reject(err);
       }
       if (token) {
-        resolve(token);
+        resolve(`Bearer ${token}`);
       }
     });
   });
@@ -33,6 +33,7 @@ export const createToken = (payload: IJwtPayload) => {
 
 export const decodeToken = (token: string): IJwtPayload => {
   try {
+    token = token.split(" ")[1];
     return jwt.verify(token, KEYWORD);
   } catch (error) {
     return { exp: "", id: "" };

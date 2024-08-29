@@ -8,7 +8,12 @@ import { AuthController } from "../../Infraestructure/webserver/controllers/auth
 import { AuthService } from "../../Adapters/services/auth/AuthService";
 import { AuthRoutes } from "../../Infraestructure/webserver/routes/AuthRoutes";
 import {AuthRepository} from "../../Adapters/repositories/AuthRepository";
-import {GlobalMessageService} from "../../Adapters/services/global-msg/messages";
+import { AppDataSource } from "../../Infraestructure/database";
+import { User } from "../../Infraestructure/database/entities/user.entity";
+import { MessageService } from "../../Adapters/services/message/mesageService";
+import { RoomUser } from "../../Infraestructure/database/entities/roomUser.entity";
+import { Room } from "../../Infraestructure/database/entities/room.entity";
+import { Friend } from "../../Infraestructure/database/entities/friend.entity";
 
 export class DependencyContainer {
   private readonly _container: AwilixContainer;
@@ -25,6 +30,7 @@ export class DependencyContainer {
     this.routes();
     this._container.register({
       server: asClass(Server).singleton(),
+      appDataSource: asValue(AppDataSource),
     });
   }
 
@@ -45,7 +51,7 @@ export class DependencyContainer {
   services() {
     this._container.register({
       authService: asClass(AuthService).scoped(),
-      globalMessageService: asClass(GlobalMessageService).scoped()
+      messageService: asClass(MessageService).scoped()
     });
   }
   environmentsVars() {
@@ -55,7 +61,11 @@ export class DependencyContainer {
   }
   repositories(){
     this._container.register({
-      authRepository: asClass(AuthRepository).scoped()
+      authRepository: asClass(AuthRepository).scoped(),
+      userRepository: asFunction(() => AppDataSource.getRepository(User)).scoped(),
+      roomRepository: asFunction(() => AppDataSource.getRepository(Room)).scoped(),
+      roomUserRepository: asFunction(() => AppDataSource.getRepository(RoomUser)).scoped(),
+      friendRepository: asFunction(() => AppDataSource.getRepository(Friend)).scoped(),
     })
   }
 }

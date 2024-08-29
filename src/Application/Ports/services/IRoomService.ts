@@ -1,9 +1,6 @@
-import {Room} from "../../Entities/Room";
+import { Room, RoomType } from "../../../Infraestructure/database/entities/room.entity";
 export interface IRoomService {
-    getRom(id: string): Promise<Room>
+    getRoom(id: string): Promise<Room>
     getRoomsByUser(username: string): Promise<Array<Room>>
-    //user to user
-    createRoomUTU(): Promise<Room>
-    //user to multi user
-    createRoomUTMU():Promise<Room>
+    createRoom(type: RoomType, id?: string): Promise<Room>
 }
